@@ -1,59 +1,69 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const MainApp());
+import 'component/groupItem.dart';
 
-var redColor = Color.fromRGBO(217, 24, 66, 1.0);
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(title: "Академия TOP", home: HomePage());
-  }
+void main() {
+  runApp(const MyApp());
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBar,
-      backgroundColor: Color.fromRGBO(240, 240, 240, 1),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-
-        },
-        backgroundColor: redColor,
-        child: Icon(
-          Icons.search,
-          size: 50,
-          color: Colors.white,
-        ),
+    return MaterialApp(
+      title: 'Flutter App!!',
+      theme: ThemeData(
+        colorSchemeSeed: Colors.indigo,
+        useMaterial3: true,
       ),
-      body: Container(
-        padding: EdgeInsets.all(10),
-        child: ListView(
-          children: [
-            Text("П31"),
-            Text("П41"),
-          ],
-        )
-      )
+      darkTheme: ThemeData(
+        colorSchemeSeed: Colors.blue,
+        useMaterial3: true,
+      ),
+      home: Scaffold(
+        body: const MyHomePage(),
+      ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
-var appBar = AppBar(
-  title: Text(
-    "Академия TOP Стерлитамак",
-    style: TextStyle(
-      fontSize: 25,
-      color: Colors.white,
-      fontWeight: FontWeight.bold
-    ),
-  ),
-  centerTitle: true,
-  backgroundColor: redColor,
-);
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
+
+  List<String> getGroups() {
+    List<String> arr = [];
+    for (var i = 0; i < 20; i++) {
+      arr.add("П${1 + i}1");
+    }
+    return arr;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: Column(
+          children: [
+            Center(
+                child: Text(
+                    "список групп:",
+                    style: TextStyle(
+                        fontSize: 30,
+                        decoration: TextDecoration.underline
+                    )
+                )
+            ),
+            Container(
+              height: 200,
+              child: ListView(
+                children: getGroups()
+                    .map((String s) => GroupItem(groupName: s)).toList(),
+              ),
+            )
+          ],
+        )
+    );
+  }
+}
