@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:top_academy/component/dateSelector.dart';
 
-import 'component/groupItem.dart';
+import 'component/groupList.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,13 +34,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
 
-  List<String> getGroups() {
-    List<String> arr = [];
-    for (var i = 0; i < 20; i++) {
-      arr.add("П${1 + i}1");
-    }
-    return arr;
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -57,18 +50,11 @@ class MyHomePage extends StatelessWidget {
                     )
                 )
             ),
-            SizedBox(
-              height: 200,
-              child: CupertinoScrollbar(
-                child: ListView(
-                  children: getGroups()
-                      .map((String s) => GroupItem(groupName: s)).toList(),
-                ),
-              ),
-            ),
+            GroupList(),
             DateSelector()
           ],
         )
     );
   }
 }
+
