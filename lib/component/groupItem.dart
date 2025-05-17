@@ -7,24 +7,20 @@ class GroupItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(
-          vertical: 2,
-          horizontal: 20
-      ),
-      padding: EdgeInsets.symmetric(
-          vertical: 2,
-          horizontal: 20
-      ),
-      decoration: BoxDecoration(
-        color: Colors.black12,
-      ),
-      child: Center(
-        child: Text(
-          groupName,
-          style: TextStyle(
-            fontSize: 20,
-          ),
+    return Card(
+      color: Colors.white70,
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+      child: ListTile(
+        title: Text(
+            groupName,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 24,)
+        ),
+        trailing: IconButton(
+            onPressed: () => {},
+            icon: Icon(
+              Icons.navigate_next
+            )
         ),
       ),
     );

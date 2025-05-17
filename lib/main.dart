@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:top_academy/component/dateSelector.dart';
 
 import 'component/groupItem.dart';
 
@@ -55,13 +57,16 @@ class MyHomePage extends StatelessWidget {
                     )
                 )
             ),
-            Container(
+            SizedBox(
               height: 200,
-              child: ListView(
-                children: getGroups()
-                    .map((String s) => GroupItem(groupName: s)).toList(),
+              child: CupertinoScrollbar(
+                child: ListView(
+                  children: getGroups()
+                      .map((String s) => GroupItem(groupName: s)).toList(),
+                ),
               ),
-            )
+            ),
+            DateSelector()
           ],
         )
     );
