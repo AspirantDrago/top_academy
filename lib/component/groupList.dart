@@ -22,9 +22,10 @@ class _GroupListState extends State<GroupList> {
   void initState() {
     super.initState();
     Api.getGroups(1).then((value) {
-      print(value);
       if (value != null) {
-        _groups = value;
+        setState(() {
+          _groups = value;
+        });
       }
     }).catchError((e) {
       print('Error: $e');
