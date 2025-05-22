@@ -24,7 +24,7 @@ class Api {
         final data = json.decode(response.body);
         List<Group> result = [];
         data["groups"]!.forEach((s) {
-          result.add(Group(name: s));
+          result.add(Group(name: s["name"], id: s["id"]));
         });
         return result;
       } catch (e) {

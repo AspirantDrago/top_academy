@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:top_academy/component/dateSelector.dart';
+import 'package:top_academy/component/eventList.dart';
 
 import 'component/groupList.dart';
 
@@ -24,17 +25,17 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: Scaffold(
-        body: const MyHomePage(),
+        body: const HomePage(),
       ),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
 
 
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,13 @@ class MyHomePage extends StatelessWidget {
                 )
             ),
             GroupList(),
-            DateSelector()
+            DateSelector(),
+            Expanded(
+                child: Padding(
+                    padding: EdgeInsets.all(10),
+                    child: EventList()
+                )
+            )
           ],
         )
     );

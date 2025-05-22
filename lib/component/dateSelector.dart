@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:top_academy/models/data_app.dart';
 import 'package:top_academy/src/themeColors.dart';
 import 'package:intl/intl.dart';
 
@@ -10,18 +11,17 @@ class DateSelector extends StatefulWidget {
 }
 
 class _DateSelectorState extends State<DateSelector> {
-  late DateTime selectedDate;
   final DateFormat dateFormatter = DateFormat('dd.MM.yyyy');
 
   void nextDay() {
     setState(() {
-      selectedDate = DateTime(selectedDate.year, selectedDate.month, selectedDate.day + 1);
+      DataApp.date = DateTime(DataApp.date.year, DataApp.date.month, DataApp.date.day + 1);
     });
   }
 
   void prevDay() {
     setState(() {
-      selectedDate = DateTime(selectedDate.year, selectedDate.month, selectedDate.day - 1);
+      DataApp.date = DateTime(DataApp.date.year, DataApp.date.month, DataApp.date.day - 1);
     });
   }
 
@@ -29,7 +29,7 @@ class _DateSelectorState extends State<DateSelector> {
   void initState() {
     super.initState();
     var now = DateTime.now();
-    selectedDate = DateTime(now.year, now.month, now.day);
+    DataApp.date = DateTime(now.year, now.month, now.day);
   }
 
   @override
@@ -52,7 +52,7 @@ class _DateSelectorState extends State<DateSelector> {
             ),
           ),
           Text(
-            dateFormatter.format(selectedDate),
+            dateFormatter.format(DataApp.date),
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,

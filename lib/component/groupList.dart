@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:top_academy/models/data_app.dart';
 import 'package:top_academy/src/api.dart';
 
 import '../models/group.dart';
@@ -14,17 +16,13 @@ class GroupList extends StatefulWidget {
 class _GroupListState extends State<GroupList> {
   List<Group> _groups = [];
 
-  // List<String> getGroups() {
-  //   return arr;
-  // }
-
   @override
   void initState() {
     super.initState();
-    Api.getGroups(1).then((value) {
+    Api.getGroups(DataApp.filialId).then((value) {
       if (value != null) {
         setState(() {
-          _groups = value;
+          _groups = value.cast<Group>();
         });
       }
     }).catchError((e) {
@@ -36,10 +34,12 @@ class _GroupListState extends State<GroupList> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 200,
-      child: CupertinoScrollbar(
-        child: ListView(
-          children: _groups.map((Group group) => GroupItem(groupName: group.name)).toList(),
-        ),
+      child: (_groups.isEmpty ? Center(child: CircularProgressIndicator()) :
+        CupertinoScrollbar(
+          child: ListView(
+            children: _groups.map((Group group) => GroupItem(groupName: group.name)).toList(),
+          ),
+        )
       ),
     );
   }
