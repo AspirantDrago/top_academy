@@ -2,16 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:top_academy/component/event_item.dart';
 import 'package:top_academy/models/event.dart';
 
+import '../models/group.dart';
+
 class EventList extends StatefulWidget {
   EventList({super.key});
-
-  List<Event>? events = [
-    Event(),
-    Event(),
-    Event(),
-    Event(),
-    Event(),
-  ];
 
   @override
   State<EventList> createState() => _EventListState();
@@ -20,10 +14,22 @@ class EventList extends StatefulWidget {
 class _EventListState extends State<EventList> {
   @override
   Widget build(BuildContext context) {
-    if (widget.events == null) {
+    Group g = Group(id: 777, name: "TOP group");
+
+    List<Event>? events = [
+      Event(group: g),
+      Event(group: g),
+      Event(group: g),
+      Event(group: g),
+      Event(group: g),
+    ];
+
+
+
+    if (events == null) {
       return Center(child: CircularProgressIndicator());
     } else {
-      if (widget.events!.isEmpty) {
+      if (events!.isEmpty) {
         return Center(child: Text(
           "нет занятий",
           style: TextStyle(
@@ -35,7 +41,7 @@ class _EventListState extends State<EventList> {
         direction: Axis.horizontal,
         spacing: 10,
         runSpacing: 10,
-        children: widget.events!.map((event) => EventItem(event: event)).toList()
+        children: events!.map((event) => EventItem(event: event)).toList()
       );
     }
   }

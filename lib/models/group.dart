@@ -1,5 +1,7 @@
 import 'package:hive/hive.dart';
 
+part 'group.g.dart';
+
 @HiveType(typeId: 0)
 class Group extends HiveObject {
 

@@ -16,34 +16,41 @@ class Api {
   }
 
   static Future<void> initial() async {
-    // Hive.registerAdapter();
-    // GroupAdapter()
+    Hive.registerAdapter(GroupAdapter());
     groupBox = await Hive.openBox<Group>('groups');
   }
 
   static Future<List<Group>?> getGroups(int filialId) async {
-    final response =
-        await http.get(Uri(
+    await _getGroups(filialId);
+    return groupBox.values.toList();
+  }
+
+
+  static Future<List<Group>?> _getGroups(int filialId) async {
+    http.Response? response;
+    try {
+      response = await http.get(Uri(
           scheme: 'http',
           host: host,
           port: port,
-          path: '/filial/$filialId/groups'
-        ));
-    if (response.statusCode == 200) {
-      try {
+          path: '/filial/$filialId/groups',
+      ));
+      if (response.statusCode == 200) {
         final data = json.decode(response.body);
         List<Group> result = [];
-        data["groups"]!.forEach((s) {
-          result.add(Group(name: s["name"], id: s["id"]));
+        await groupBox.clear();
+        await data["groups"]!.forEach((s) async {
+          Group g = Group(name: s["name"], id: s["id"]);
+          result.add(g);
+          await groupBox.put(g.id.toString(), g);
         });
         return result;
-      } catch (e) {
-        if (kDebugMode) {
-          print('Error with get groups, url: ${response.request?.url}, answer: $e');
-        }
-        return null;
       }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error with get groups, url: ${response?.request?.url}, answer: $e');
+      }
+      return null;
     }
-    return null;
   }
 }
