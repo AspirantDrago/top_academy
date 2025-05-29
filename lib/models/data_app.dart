@@ -1,4 +1,4 @@
-import 'package:top_academy/component/groupItem.dart';
+import 'package:top_academy/component/group_item.dart';
 
 class DataApp {
   static GroupItem? groupItem;

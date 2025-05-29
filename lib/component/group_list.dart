@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:top_academy/models/data_app.dart';
 import 'package:top_academy/src/api.dart';
 
 import '../models/group.dart';
-import 'groupItem.dart';
+import 'group_item.dart';
 
 class GroupList extends StatefulWidget {
   const GroupList({super.key});
@@ -15,6 +16,7 @@ class GroupList extends StatefulWidget {
 
 class _GroupListState extends State<GroupList> {
   List<Group> _groups = [];
+  final scrollController = ScrollController();
 
   @override
   void initState() {
@@ -26,7 +28,9 @@ class _GroupListState extends State<GroupList> {
         });
       }
     }).catchError((e) {
-      print('Error: $e');
+      if (kDebugMode) {
+        print('Error: $e');
+      }
     });
   }
 
@@ -36,7 +40,9 @@ class _GroupListState extends State<GroupList> {
       height: 200,
       child: (_groups.isEmpty ? Center(child: CircularProgressIndicator()) :
         CupertinoScrollbar(
+          controller: scrollController,
           child: ListView(
+            controller: scrollController,
             children: _groups.map((Group group) => GroupItem(groupName: group.name)).toList(),
           ),
         )

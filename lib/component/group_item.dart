@@ -4,20 +4,20 @@ import 'package:top_academy/models/data_app.dart';
 class GroupItem extends StatefulWidget {
   final String groupName;
   bool isChecked;
-  late _GroupItemState _currentState;
+  late GroupItemState _currentState;
 
-  _GroupItemState get currentState => _currentState;
+  GroupItemState get currentState => _currentState;
 
   GroupItem({super.key, required this.groupName, this.isChecked = false});
 
   @override
   State<GroupItem> createState() {
-    _currentState = _GroupItemState();
+    _currentState = GroupItemState();
     return _currentState;
   }
 }
 
-class _GroupItemState extends State<GroupItem> {
+class GroupItemState extends State<GroupItem> {
   void toggle() {
     setState(() {
       if (widget.isChecked) {
@@ -36,9 +36,9 @@ class _GroupItemState extends State<GroupItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: this.toggle,
+      onTap: toggle,
       child: Card(
-        color: this.widget.isChecked ? Colors.blue[300] : Colors.white70,
+        color: widget.isChecked ? Colors.blue[300] : Colors.white70,
         margin: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
         child: ListTile(
           leading: SizedBox(width: 40),

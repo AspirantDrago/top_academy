@@ -1,16 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:top_academy/component/eventItem.dart';
+import 'package:top_academy/component/event_item.dart';
+import 'package:top_academy/models/event.dart';
 
 class EventList extends StatefulWidget {
   EventList({super.key});
 
-  List<EventItem>? events = [EventItem()];
-  // = [
-  //   // EventItem(), EventItem(), EventItem(),
-  //   // EventItem(), EventItem(), EventItem(),
-  //   // EventItem(), EventItem(), EventItem(),
-  // ];
+  List<Event>? events = [
+    Event(),
+    Event(),
+    Event(),
+    Event(),
+    Event(),
+  ];
 
   @override
   State<EventList> createState() => _EventListState();
@@ -34,7 +35,7 @@ class _EventListState extends State<EventList> {
         direction: Axis.horizontal,
         spacing: 10,
         runSpacing: 10,
-        children: widget.events!,
+        children: widget.events!.map((event) => EventItem(event: event)).toList()
       );
     }
   }

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:top_academy/component/dateSelector.dart';
-import 'package:top_academy/component/eventList.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:top_academy/component/date_selector.dart';
+import 'package:top_academy/component/event_list.dart';
+import 'package:top_academy/src/api.dart';
 
-import 'component/groupList.dart';
+import 'component/group_list.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Api.initial();
   runApp(const MyApp());
 }
 
@@ -39,28 +44,26 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(
-          children: [
-            Center(
-                child: Text(
-                    "список групп:",
-                    style: TextStyle(
-                        fontSize: 30,
-                        decoration: TextDecoration.underline
-                    )
-                )
-            ),
-            GroupList(),
-            DateSelector(),
-            Expanded(
-                child: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: EventList()
+    return Column(
+      children: [
+        Center(
+            child: Text(
+                "список групп:",
+                style: TextStyle(
+                    fontSize: 30,
+                    decoration: TextDecoration.underline
                 )
             )
-          ],
+        ),
+        GroupList(),
+        DateSelector(),
+        Expanded(
+            child: Padding(
+                padding: EdgeInsets.all(10),
+                child: EventList()
+            )
         )
+      ],
     );
   }
 }

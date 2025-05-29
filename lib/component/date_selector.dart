@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:top_academy/models/data_app.dart';
-import 'package:top_academy/src/themeColors.dart';
+import 'package:top_academy/src/theme_colors.dart';
 import 'package:intl/intl.dart';
 
 class DateSelector extends StatefulWidget {
