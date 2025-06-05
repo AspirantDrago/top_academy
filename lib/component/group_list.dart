@@ -29,7 +29,7 @@ class _GroupListState extends State<GroupList> {
       }
     }).catchError((e) {
       if (kDebugMode) {
-        print('Error: $e');
+        print('Error updating list of groups: $e');
       }
     });
   }
