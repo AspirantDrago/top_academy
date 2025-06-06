@@ -82,7 +82,7 @@ class Api {
         final data = json.decode(response.body);
         List<Group> result = [];
         await groupBox.clear();
-        await data['groups']!.forEach((s) async {
+        await data!.forEach((s) async {
           Group g = Group(name: s['name'], id: s['id']);
           result.add(g);
           await groupBox.put(g.id.toString(), g);
