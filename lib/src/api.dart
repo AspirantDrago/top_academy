@@ -36,20 +36,20 @@ class Api {
         scheme: 'http',
         host: host,
         port: port,
-        path: (groupId != null) ? '/filial/$filialId/groups/$groupId/date/$dateString' : '/filial/$filialId/groups/date/$dateString',
+        path: (groupId != null) ? '/filial/$filialId/events/date/$dateString/group/$groupId/' : '/filial/$filialId/events/date/$dateString/',
       ));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        await data['events']!.forEach((s) async {
+        await data!.forEach((s) async {
           Event obj = Event(
             group: groupBox.get(s['groupId'].toString())!,
             dateTime: DateTime.parse(s['date'] + ' ' + s['time']),
-            auditoryId: s['auditoryId'],
-            auditory: s['auditory'],
-            subjectId: s['subjectId'],
-            subject: s['subject'],
-            teacherId: s['teacherId'],
-            teacher: s['teacher'],
+            auditoryId: s['auditorium']['id'],
+            auditory: s['auditorium']['name'],
+            subjectId: s['subject'] == null ? null : s['subject']['id'],
+            subject: s['name'],
+            teacherId: s['teacher']['id'],
+            teacher: s['teacher']['full_name'],
           );
           result.add(obj);
         });
