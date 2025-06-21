@@ -5,54 +5,68 @@ import 'package:top_academy/models/event.dart';
 import 'package:top_academy/src/api.dart';
 
 import '../models/data_app.dart';
-import '../models/group.dart';
 
 class EventList extends StatefulWidget {
   const EventList({super.key});
 
   @override
-  State<EventList> createState() => _EventListState();
+  State<EventList> createState() => EventListState();
 }
 
-class _EventListState extends State<EventList> {
+class EventListState extends State<EventList> {
   List<Event> _events = [];
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    Api.getEvents(
-      filialId: DataApp.filialId,
-      groupId: null,
-      date: DataApp.date
-    ).then((value) {
+    loadEvents(); // первый запрос при старте
+  }
+
+  Future<void> loadEvents() async {
+    setState(() => _isLoading = true); // включаем индикатор загрузки
+    try {
+      final value = await Api.getEvents(
+        filialId: DataApp.filialId,
+        groupId: null,
+        date: DataApp.date,
+      );
       if (value != null) {
         setState(() {
           _events = value.cast<Event>();
         });
       }
-    }).catchError((e) {
+    } catch (e) {
       if (kDebugMode) {
         print('Error updating list of events: $e');
       }
-    });
+    } finally {
+      setState(() => _isLoading = false);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-
-    if (_events.isEmpty) {
-      return Center(child: Text(
-        "нет занятий",
-        style: TextStyle(
-            fontSize: 50
-        ),
-      ),);
-    }
-    return Wrap(
-      direction: Axis.horizontal,
-      spacing: 10,
-      runSpacing: 10,
-      children: _events.map((event) => EventItem(event: event)).toList()
+    // оборачиваем в RefreshIndicator для «потяни, чтобы обновить»
+    return RefreshIndicator(
+      onRefresh: loadEvents,
+      child: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : _events.isEmpty
+          ? ListView( // нужен ListView, чтобы RefreshIndicator работал
+        children: [
+          SizedBox(height: 200),
+          Center(
+            child: Text("нет занятий", style: TextStyle(fontSize: 50)),
+          ),
+        ],
+      )
+          : Wrap(
+        direction: Axis.horizontal,
+        spacing: 10,
+        runSpacing: 10,
+        children: _events.map((e) => EventItem(event: e)).toList(),
+      ),
     );
-    }
+  }
 }
